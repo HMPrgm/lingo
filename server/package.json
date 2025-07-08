@@ -1,0 +1,14 @@
+{
+  "name": "lingo",
+  "version": "1.0.0",
+  "description": "Backend for lingo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HMPrgm",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
