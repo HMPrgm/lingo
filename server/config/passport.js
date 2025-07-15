@@ -1,8 +1,7 @@
 // server/config/passport.js
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
-const User = require('../models/User'); // Your Mongoose User model
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const pool = require('../db'); // Import the PostgreSQL pool
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -10,24 +9,23 @@ passport.use(new GoogleStrategy({
     callbackURL: "/auth/google/callback"
   },
   async (accessToken, refreshToken, profile, done) => {
-    // This function is called after the user successfully authenticates with Google.
-    // The 'profile' object contains their Google profile information.
-    try {
-      // Find a user in your database with this googleId
-      let user = await User.findOne({ googleId: profile.id });
+    const googleId = profile.id;
+    const email = profile.emails[0].value;
 
-      if (user) {
-        // If user exists, continue
-        return done(null, user);
+    try {
+      // Check if user exists in the database
+      const result = await pool.query('SELECT * FROM users WHERE google_id = $1', [googleId]);
+
+      if (result.rows.length > 0) {
+        // User exists, return the user data
+        return done(null, result.rows[0]);
       } else {
-        // If not, create a new user in your database
-        const newUser = new User({
-          googleId: profile.id,
-          email: profile.emails[0].value,
-          // You can add other fields like name from profile.displayName
-        });
-        await newUser.save();
-        return done(null, newUser);
+        // User does not exist, create a new user
+        const newUserResult = await pool.query(
+          'INSERT INTO users (google_id, email) VALUES ($1, $2) RETURNING *',
+          [googleId, email]
+        );
+        return done(null, newUserResult.rows[0]);
       }
     } catch (err) {
       return done(err);
@@ -43,8 +41,8 @@ passport.serializeUser((user, done) => {
 // Retrieves user details from the session using the ID
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
-    done(null, user);
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+    done(null, result.rows[0]);
   } catch (err) {
     done(err);
   }

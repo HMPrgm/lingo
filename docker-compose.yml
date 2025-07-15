@@ -1,6 +1,3 @@
-# Specifies the Docker Compose file format version.
-version: '3.8'
-
 # Defines the services (containers) that make up your application.
 services:
   # The name of our postgres service.
