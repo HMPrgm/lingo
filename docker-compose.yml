@@ -1,0 +1,27 @@
+# Defines the services (containers) that make up your application.
+services:
+  # The name of our postgres service.
+  postgres-db:
+    # Tells Docker Compose to build the image from the Dockerfile
+    # located in the './database' directory.
+    build: ./database
+    container_name: lingo-pg
+    restart: always
+    environment:
+      # These environment variables are used by the official postgres image
+      # to set up the database superuser and default database.
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lingodb
+    ports:
+      # Maps port 5432 on your local machine to port 5432 inside the container.
+      # This allows your Express app (running locally) to connect to the database.
+      - "5432:5432"
+    volumes:
+      # Creates a named volume to persist the database data.
+      # This ensures that your data is saved even if the container is removed or restarted.
+      - postgres_data:/var/lib/postgresql/data
+
+# Defines the named volumes used by the services.
+volumes:
+  postgres_data:
