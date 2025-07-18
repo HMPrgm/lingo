@@ -86,6 +86,17 @@ export default function App(): JSX.Element {
   return <AuthForms setUser={setUser} />;
 }
 
+export async function isLoggedIn(): Promise<() => Promise<boolean>> {
+  return async () => {
+      try {
+        const { data } = await axios.get<User>('/api/auth/profile');
+        return true
+      } catch (error) {
+        return false;
+      }
+    };
+}
+
 
 // --- View for Logged-In Users ---
 
