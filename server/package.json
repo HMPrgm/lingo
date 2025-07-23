@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "migrate": "node-pg-migrate"
   },
   "author": "HMPrgm",
   "license": "ISC",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/express-session": "^1.18.2",
     "@types/passport": "^1.0.17",
-    "@types/passport-local": "^1.0.38"
+    "@types/passport-local": "^1.0.38",
+    "node-pg-migrate": "^8.0.3"
   }
 }
