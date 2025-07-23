@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use('/auth', require('./routes/auth.routes'));
+app.use('/articles', require('./routes/article.routes'));
 
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Lingo backend!' });
