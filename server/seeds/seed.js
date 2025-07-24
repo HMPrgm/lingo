@@ -1,7 +1,7 @@
-const pool = require('../db'); 
+import pool from '../db.js'; 
+import germanArticlesSeed from './01-german-articles.js';
 
 async function seedDatabase() {
-    // Get a client from the connection pool
     const client = await pool.connect();
     console.log('Database connection established.');
 
@@ -15,12 +15,10 @@ async function seedDatabase() {
     } catch (error) {
         console.error('Error seeding database:', error);
     } finally {
-        // Make sure to release the client and end the pool
         client.release();
         await pool.end();
         console.log('Database connection closed.');
     }
 }
 
-// Run the seeding function
 seedDatabase();

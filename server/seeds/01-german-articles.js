@@ -51,7 +51,7 @@ const articles = [
     },
 ];
 
-async function germanArticlesSeed(pool) {
+export default async function germanArticlesSeed(pool) {
 
     for (const article of articles) {
         try {
@@ -66,4 +66,3 @@ async function germanArticlesSeed(pool) {
     }
 }
 
-module.exports = germanArticlesSeed;
