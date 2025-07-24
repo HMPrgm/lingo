@@ -2,47 +2,17 @@
 import { useEffect, useState, useRef, FC } from "react";
 import { difficultyColors } from "../article_card";
 import { ArrowLeft, XIcon } from '../../_components/icons';
+import Article from '../../_types/article.type';
+import { fetchArticleById } from "../../_api/article.api";
 
-export interface Article {
-  id: number;
-  title: string;
-  excerpt: string;
-  imageUrl: string;
-  category: string;
-  difficulty: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
-  tags: string[];
-  language?: string;
-}
-
-const dictionary: { [key: string]: React.ReactNode } = {
-    ciudad: <p>Paris is a very beautiful <strong>city</strong>, especially in the spring.</p>,
-    explorar: <p>We love to <strong>explore</strong> the forest behind our house.</p>,
-    calles: <p>The <strong>streets</strong> of Rome are filled with ancient history.</p>,
-    museos: <p>We visited three <strong>museums</strong> during our trip to New York.</p>,
-    cultura: <p>I am interested in learning about Japanese <strong>culture</strong>.</p>,
-    comida: <p>My favorite type of <strong>food</strong> is Italian pasta.</p>,
-};
+const dictionary: { [key: string]: React.ReactNode } = {};
 
 type ArticlePageProps = {
   params: { id: string };
 };
 
-const a: Article = {
-  id: 1,
-  title: 'A Trip to the Local Market',
-  excerpt: 'Discover common phrases and vocabulary for shopping for groceries and interacting with vendors.',
-  imageUrl: 'https://placehold.co/800x400/a7f3d0/14532d?text=Market+Trip',
-  category: 'Daily Life',
-  difficulty: 'A1',
-  tags: ['Shopping', 'Food', 'Conversation'],
-};
-const ac = `
-<p>Explorar una nueva <strong>ciudad</strong> es una aventura emocionante. Puedes caminar por <strong>calles</strong> con mucha historia y ver edificios antiguos. Cada <strong>ciudad</strong> tiene su propia personalidad y encanto.</p><p>Una buena idea es visitar los <strong>museos</strong> locales. En los <strong>museos</strong>, aprendes sobre el arte y la <strong>cultura</strong> del lugar. También es importante probar la <strong>comida</strong> típica. Busca pequeños restaurantes donde comen los locales para tener una experiencia auténtica.</p><p>No necesitas un plan estricto. A veces, las mejores experiencias ocurren cuando simplemente decides <strong>explorar</strong> sin un destino fijo. ¡Disfruta tu viaje!</p>
-`;
-
 export default function ArticlePage({ params }: ArticlePageProps) {
   const [article, setArticle] = useState<Article | null>(null);
-  const [articleContent, setArticleContent] = useState<string>("");
   const [popupData, setPopupData] = useState<PopupData | null>(null);
 
   const handleWordClick = (word: string, x: number, y: number) => {
@@ -57,8 +27,16 @@ export default function ArticlePage({ params }: ArticlePageProps) {
   };
 
   useEffect(() => {
-    setArticle(a);
-    setArticleContent(ac);
+    async function fetchArticle() {
+      try {
+        const a = await fetchArticleById(params.id);
+        setArticle(a);
+      } catch (error) {
+        console.error('Error fetching article:', error);
+      }
+    }
+
+    fetchArticle();
   }, []);
 
   if (!article) {
@@ -94,7 +72,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
               {/* This is where the article text would go. Using dangerouslySetInnerHTML to render HTML from mock data */}
             
               <InteractiveContent 
-                htmlContent={articleContent} 
+                htmlContent={article.content} 
                 onWordClick={handleWordClick}
               />
             </div>

@@ -3,7 +3,7 @@ const articles = [
         title: 'Meine erste Reise nach Paris',
         content: 'Letztes Jahr bin ich zum ersten Mal nach Paris gefahren. Die Stadt ist wunderschön. Ich habe den Eiffelturm gesehen und er war sehr hoch. Ich habe auch das Louvre-Museum besucht. Ich habe viele Croissants gegessen und in kleinen Cafés Kaffee getrunken. Das Wetter war schön und sonnig. Ich bin jeden Tag viel gelaufen. Es war ein wunderbarer Urlaub.',
         excerpt: 'Eine kurze und einfache Geschichte über den Besuch der berühmten Sehenswürdigkeiten von Paris, wie dem Eiffelturm und dem Louvre.',
-        image_url: 'https://picsum.photos/id/1015/400/300',
+        image_url: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34',
         category: 'Reise',
         difficulty: 'A2',
         tags: ['paris', 'reise', 'frankreich', 'urlaub'],

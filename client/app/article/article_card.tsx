@@ -1,5 +1,6 @@
 import React from 'react'
-import { Article } from './[id]/page';
+import Article from '../_types/article.type';
+import Image from 'next/image';
 
 export const difficultyColors = {
     A1: 'bg-green-100 text-green-800',
@@ -16,14 +17,14 @@ export default function ArticleCard({ article }: { article: Article }) {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
       <a href={`/article/${article.id}`} className="block">
-        <div className="relative">
-          <img 
-            className="h-48 w-full object-cover" 
+        {/* <div className="relative">
+          <Image 
             src={article.imageUrl} 
             alt={article.title} 
-            onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found'; }}
-          />
-        </div>
+            width={400} 
+            height={300}
+          /> 
+        </div> */}
         <div className="p-6">
           <div className="flex justify-between items-center mb-2">
             <p className="text-sm font-medium text-blue-600">{article.category}</p>
