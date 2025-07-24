@@ -1,4 +1,4 @@
-const pool = require('../db'); // Import the PostgreSQL pool
+const pool = require('../db'); 
 
 class Article {
   constructor(id, title, content, excerpt, imageUrl, category, difficulty, tags, language) {
@@ -34,3 +34,5 @@ class Article {
     return result.rows.map(row => new Article(row.id, row.title, row.content, row.excerpt, row.image_url, row.category, row.difficulty, row.tags, row.language));
   }
 }
+
+module.exports = Article;

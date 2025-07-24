@@ -1,6 +1,6 @@
 const express = require('express');
 const r = express.Router();
-const Article = require('../models/article.model');
+const Article = require('../models/article.model.js');
 
 // Create a new article
 r.post('/', async (req, res) => {
@@ -24,7 +24,7 @@ r.get('/:id', async (req, res) => {
       res.status(404).json({ error: 'Article not found' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve article' });
+    res.status(500).json({ error: error.message || 'Failed to retrieve article' });
   }
 });
 
