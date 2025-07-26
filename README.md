@@ -22,6 +22,7 @@ Lingo is built with a modern and maintainable tech stack, making it easy for oth
 Want to run Lingo on your own machine? Here’s how to get started.
 ### Prerequisites
 - Node.js
+- Docker
 ### Installation & Setup
 Clone the repository:
 ```
